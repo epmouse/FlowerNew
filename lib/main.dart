@@ -1,3 +1,5 @@
+import 'package:flower_app/model/model_bottom_nav.dart';
+import 'package:flower_app/utils/routes_util.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -10,53 +12,80 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(),
+      routes: MyRoutes.getRoutes(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  final List<BottomNavModel> bottomItems;
+
+  MyHomePage({this.bottomItems}) : super();
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() {
+    return _MyHomePageState();
+  }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  final pages = [];
+  final PageController _pageController = PageController();
+  int _currentIndex = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+  @override
+  void initState() {
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
+      bottomNavigationBar: BottomNavigationBar(
+          unselectedItemColor: Theme.of(context).disabledColor,
+          selectedItemColor: Theme.of(context).primaryColor,
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+              _pageController.jumpToPage(index);
+            });
+          },
+          items: _bottomNavItemBuild()),
+      body: PageView.builder(
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        controller: _pageController,
+        itemBuilder: (context, index) {},
+        itemCount: pages.length,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
+  _bottomNavItemBuild() {
+    if (widget.bottomItems == null)
+      return _getDefaultBottomItems();
+    else
+      return _getRemoteItems();
+  }
+
+  _getDefaultBottomItems() {
+    return <BottomNavigationBarItem>[
+      BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('首页')),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.local_florist), title: Text('花园')),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.laptop_chromebook), title: Text('知识')),
+      BottomNavigationBarItem(
+          icon: Icon(Icons.accessibility_new), title: Text('我')),
+    ];
+  }
+
+  ///下载远程图标
+  _getRemoteItems() {}
 }
