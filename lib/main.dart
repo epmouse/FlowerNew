@@ -1,4 +1,8 @@
 import 'package:flower_app/model/model_bottom_nav.dart';
+import 'package:flower_app/pages/page_flowers.dart';
+import 'package:flower_app/pages/page_home.dart';
+import 'package:flower_app/pages/page_knowlege.dart';
+import 'package:flower_app/pages/page_me.dart';
 import 'package:flower_app/utils/routes_util.dart';
 import 'package:flutter/material.dart';
 
@@ -12,25 +16,25 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(),
+      home: MainNavPage(),
       routes: MyRoutes.getRoutes(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MainNavPage extends StatefulWidget {
   final List<BottomNavModel> bottomItems;
 
-  MyHomePage({this.bottomItems}) : super();
+  MainNavPage({this.bottomItems}) : super();
 
   @override
-  _MyHomePageState createState() {
-    return _MyHomePageState();
+  _MainNavPageState createState() {
+    return _MainNavPageState();
   }
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final pages = [];
+class _MainNavPageState extends State<MainNavPage> {
+  final pages = [Home(),Flowers(),Knowledge(),Me()];
   final PageController _pageController = PageController();
   int _currentIndex = 0;
 
@@ -61,7 +65,9 @@ class _MyHomePageState extends State<MyHomePage> {
           });
         },
         controller: _pageController,
-        itemBuilder: (context, index) {},
+        itemBuilder: (context, index) {
+          return pages[index];
+        },
         itemCount: pages.length,
       ),
     );
