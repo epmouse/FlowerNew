@@ -11,12 +11,10 @@ class HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    print('home--> initState');
 
   }
   @override
   Widget build(BuildContext context) {
-    print('home--> build');
     return Scaffold(
       body: Center(
         child: RaisedButton(
@@ -34,6 +32,5 @@ class HomeState extends State<Home> {
   @override
   void dispose() {
     super.dispose();
-    print('home--> dispose');
   }
 }

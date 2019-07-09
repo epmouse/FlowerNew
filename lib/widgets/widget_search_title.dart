@@ -1,4 +1,3 @@
-import 'package:flower_app/utils/util_color.dart';
 import 'package:flutter/material.dart';
 
 class SearchTitleBar extends StatefulWidget {
