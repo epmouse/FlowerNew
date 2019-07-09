@@ -3,6 +3,7 @@ import 'package:flower_app/pages/page_flowers.dart';
 import 'package:flower_app/pages/page_home.dart';
 import 'package:flower_app/pages/page_knowlege.dart';
 import 'package:flower_app/pages/page_me.dart';
+import 'package:flower_app/pages/page_search.dart';
 import 'package:flower_app/utils/routes_util.dart';
 import 'package:flutter/material.dart';
 
